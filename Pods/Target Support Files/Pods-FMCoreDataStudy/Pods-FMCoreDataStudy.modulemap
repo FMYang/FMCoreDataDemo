@@ -1,0 +1,6 @@
+framework module Pods_FMCoreDataStudy {
+  umbrella header "Pods-FMCoreDataStudy-umbrella.h"
+
+  export *
+  module * { export * }
+}

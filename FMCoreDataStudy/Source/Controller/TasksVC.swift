@@ -9,7 +9,7 @@ import UIKit
 
 class TasksVC: UIViewController {
     
-    var datasource = [TaskModel]()
+    var datasource = [Task]()
     
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
@@ -41,12 +41,9 @@ class TasksVC: UIViewController {
     @objc func addAction() {
         let vc = TaskAddVC()
         vc.confirmBlock = { [unowned self] text in
-            let task = TaskModel()
-            task.name = text
-            task.date = Date()
+            let task = Task.insert(into: FMCoreData.shared.backgroundContext, name: text ?? "")
             self.datasource.append(task)
             self.tableView.reloadData()
-            
             FMCoreData.shared.insert(task: task)
         }
         present(vc, animated: true)

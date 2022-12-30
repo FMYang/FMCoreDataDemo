@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TaskModel: NSObject {
-    var name: String?
-    var date: Date?
-}
+//class TaskModel: NSObject {
+//    var name: String?
+//    var date: Date?
+//}

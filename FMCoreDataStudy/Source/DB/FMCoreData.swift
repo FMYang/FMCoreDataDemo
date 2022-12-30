@@ -27,57 +27,46 @@ class FMCoreData: NSObject {
     /// 上下文
     lazy var backgroundContext = persistentContainer.newBackgroundContext()
     
-    /// 创建
-    func create(name: String) -> Task {
-        return NSEntityDescription.insertNewObject(forEntityName: name, into: backgroundContext) as! Task
-    }
-    
-    // 添加
-    func save() {
-        do {
-            try backgroundContext.save()
-        } catch {
-            print(error)
-        }
-    }
     
     /// 添加
-    func insert(task: TaskModel) {
-        let entity = create(name: "Task")
-        entity.name = task.name
-        entity.date = task.date
-        
-        backgroundContext.insert(entity)
-    }
-    
-    /// 查询
-    func fetch() -> [TaskModel] {
-        let taskFetch = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        do {
-            let tasks = try backgroundContext.fetch(taskFetch) as! [Task]
-            
-            var results = [TaskModel]()
-            for entity in tasks {
-                let model = TaskModel()
-                model.name = entity.name
-                model.date = entity.date
-                results.append(model)
-            }
-            
-            return results
-        } catch {
-            fatalError("Failed to fetch task: \(error)")
+    func insert(task: Task) {
+        backgroundContext.performChanges {
+            self.backgroundContext.insert(task)
+//            _ = Task.insert(into: self.backgroundContext, name: task.name ?? "")
         }
     }
     
     /// 删除
-    func delete(task: TaskModel) {
-        guard let date = task.date else { return }
-        let request = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        request.predicate = NSPredicate(format: "date == %@", date as CVarArg)
-        let entity = try? backgroundContext.fetch(request).first
-        if let entity = entity {
-            self.backgroundContext.delete(entity)
+    func delete(task: Task) {
+        backgroundContext.performChanges {
+            self.backgroundContext.delete(task)
+        }
+//        guard let date = task.date else { return }
+//        let request = NSFetchRequest<NSManagedObject>(entityName: "Task")
+//        request.predicate = NSPredicate(format: "date == %@", date as CVarArg)
+//        let entity = try? backgroundContext.fetch(request).first
+//        if let entity = entity {
+//            self.backgroundContext.delete(entity)
+//        }
+    }
+    
+    /// 查询
+    func fetch() -> [Task] {
+        let taskFetch = Task.sortedFetchRequest
+        do {
+            let tasks = try backgroundContext.fetch(taskFetch)
+            
+//            var results = [TaskModel]()
+//            for entity in tasks {
+//                let model = TaskModel()
+//                model.name = entity.name
+//                model.date = entity.date
+//                results.append(model)
+//            }
+            
+            return tasks
+        } catch {
+            fatalError("Failed to fetch task: \(error)")
         }
     }
 }

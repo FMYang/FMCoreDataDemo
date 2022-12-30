@@ -29,41 +29,33 @@ class FMCoreData: NSObject {
     
     
     /// 添加
-    func insert(task: Task) {
+    func insert(entity: NSManagedObject) {
         backgroundContext.performChanges {
-            self.backgroundContext.insert(task)
-//            _ = Task.insert(into: self.backgroundContext, name: task.name ?? "")
+            self.backgroundContext.insert(entity)
         }
     }
     
     /// 删除
-    func delete(task: Task) {
+    func delete(entity: NSManagedObject) {
         backgroundContext.performChanges {
-            self.backgroundContext.delete(task)
+            self.backgroundContext.delete(entity)
         }
-//        guard let date = task.date else { return }
-//        let request = NSFetchRequest<NSManagedObject>(entityName: "Task")
-//        request.predicate = NSPredicate(format: "date == %@", date as CVarArg)
-//        let entity = try? backgroundContext.fetch(request).first
-//        if let entity = entity {
-//            self.backgroundContext.delete(entity)
-//        }
+    }
+    
+    // 更新
+    func update(entity: NSManagedObject) {
+        backgroundContext.performChanges {
+            self.backgroundContext.refresh(entity, mergeChanges: true)
+        }
     }
     
     /// 查询
-    func fetch() -> [Task] {
-        let taskFetch = Task.sortedFetchRequest
+    func fetch(name: String) -> [NSManagedObject] {
         do {
-            let tasks = try backgroundContext.fetch(taskFetch)
+            let request = NSFetchRequest<NSManagedObject>(entityName: name)
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
             
-//            var results = [TaskModel]()
-//            for entity in tasks {
-//                let model = TaskModel()
-//                model.name = entity.name
-//                model.date = entity.date
-//                results.append(model)
-//            }
-            
+            let tasks = try backgroundContext.fetch(request)
             return tasks
         } catch {
             fatalError("Failed to fetch task: \(error)")

@@ -41,6 +41,27 @@ class TaskCell: UITableViewCell {
         return label
     }()
     
+    lazy var detailLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 14)
+        return label
+    }()
+    
+    lazy var createDateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    
+    lazy var updateDateLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    
     lazy var lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .black.withAlphaComponent(0.15)
@@ -57,17 +78,45 @@ class TaskCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func config(task: Task) {
+        nameLabel.text = task.name
+        detailLabel.text = task.detail
+        createDateLabel.text = "Create at " + (task.date?.toString() ?? "")
+        updateDateLabel.text = "Update at " + (task.updateDate?.toString() ?? "")
+    }
+    
     // MARK: -
     func makeUI() {
         contentView.addSubview(nameLabel)
+        contentView.addSubview(detailLabel)
+        contentView.addSubview(createDateLabel)
+        contentView.addSubview(updateDateLabel)
         contentView.addSubview(lineView)
         nameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(5)
             make.left.equalToSuperview().offset(40)
             make.right.equalToSuperview().offset(-40)
-            make.centerY.equalToSuperview()
+            make.height.equalTo(25)
+        }
+        
+        detailLabel.snp.makeConstraints { make in
+            make.left.right.equalTo(nameLabel)
+            make.top.equalTo(nameLabel.snp.bottom)
+        }
+        
+        createDateLabel.snp.makeConstraints { make in
+            make.top.equalTo(detailLabel.snp.bottom)
+            make.left.equalTo(nameLabel)
+            make.height.equalTo(25)
+        }
+        
+        updateDateLabel.snp.makeConstraints { make in
+            make.right.equalToSuperview().offset(-40)
+            make.centerY.equalTo(createDateLabel)
         }
         
         lineView.snp.makeConstraints { make in
+            make.top.equalTo(createDateLabel.snp.bottom)
             make.left.equalToSuperview().offset(40)
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()

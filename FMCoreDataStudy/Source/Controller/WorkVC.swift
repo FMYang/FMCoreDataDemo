@@ -1,15 +1,15 @@
 //
-//  TasksVC.swift
+//  WorkVC.swift
 //  FMCoreDataStudy
 //
-//  Created by yfm on 2022/12/16.
+//  Created by yfm on 2022/12/30.
 //
 
 import UIKit
 
-class TasksVC: UIViewController {
-    
-    var datasource = [Task]()
+class WorkVC: UIViewController {
+
+    var datasource = [Work]()
     
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
@@ -22,7 +22,7 @@ class TasksVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Tasks"
+        title = "Works"
         view.backgroundColor = .white
         makeUI()
         configAppearance()
@@ -39,17 +39,17 @@ class TasksVC: UIViewController {
     }
     
     func loadData() {
-        datasource = FMCoreData.shared.fetch(name: Task.entityName) as! [Task]
+        datasource = FMCoreData.shared.fetch(name: Work.entityName) as! [Work]
         tableView.reloadData()
     }
     
     @objc func addAction() {
         let vc = TaskAddVC()
         vc.confirmBlock = { [unowned self] text in
-            let task = Task.create(with: FMCoreData.shared.backgroundContext, name: text ?? "")
-            self.datasource.append(task)
+            let work = Work.create(with: FMCoreData.shared.backgroundContext, name: text ?? "")
+            self.datasource.append(work)
             self.tableView.reloadData()
-            FMCoreData.shared.insert(entity: task)
+            FMCoreData.shared.insert(entity: work)
         }
         present(vc, animated: true)
     }
@@ -61,9 +61,10 @@ class TasksVC: UIViewController {
             make.edges.equalToSuperview()
         }
     }
+
 }
 
-extension TasksVC: UITableViewDelegate, UITableViewDataSource {
+extension WorkVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -75,7 +76,7 @@ extension TasksVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TaskCell
         cell.lineView.isHidden = (indexPath.row == datasource.count - 1)
-        cell.config(task: datasource[indexPath.row])
+//        cell.config(task: datasource[indexPath.row])
         return cell
     }
     
@@ -97,14 +98,8 @@ extension TasksVC: UITableViewDelegate, UITableViewDataSource {
         datasource.remove(at: indexPath.row)
         tableView.reloadData()
     }
-
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 60
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let task = datasource[indexPath.row]
-        let vc = TaskUpdateVC(task: task)
-        navigationController?.pushViewController(vc, animated: true)
+//        let work = datasource[indexPath.row]
     }
 }

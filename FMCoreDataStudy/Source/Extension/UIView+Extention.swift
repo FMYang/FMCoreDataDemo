@@ -19,3 +19,11 @@ extension UIView {
         layer.mask = nil
     }
 }
+
+extension Date {
+    func toString(format: String = "MM-dd HH:mm:ss") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: self)
+    }
+}

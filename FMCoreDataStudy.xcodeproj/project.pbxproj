@@ -10,6 +10,9 @@
 		886E2EAE294C603F009E86CF /* FMCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EAD294C603F009E86CF /* FMCoreData.swift */; };
 		886E2EE22952A4CB009E86CF /* NSManagedObjectContext+Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EE12952A4CB009E86CF /* NSManagedObjectContext+Add.swift */; };
 		886E2EE42952A559009E86CF /* NSManagedObject+Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EE32952A559009E86CF /* NSManagedObject+Add.swift */; };
+		886E2EEA295ECFE5009E86CF /* TaskUpdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EE9295ECFE5009E86CF /* TaskUpdateVC.swift */; };
+		886E2EEC295ED56F009E86CF /* Marco.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EEB295ED56F009E86CF /* Marco.swift */; };
+		886E2EF0295EF90D009E86CF /* WorkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886E2EEF295EF90D009E86CF /* WorkVC.swift */; };
 		88C59F3F294C0E36007545A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C59F3E294C0E36007545A8 /* AppDelegate.swift */; };
 		88C59F41294C0E36007545A8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C59F40294C0E36007545A8 /* SceneDelegate.swift */; };
 		88C59F43294C0E36007545A8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C59F42294C0E36007545A8 /* ViewController.swift */; };
@@ -31,6 +34,11 @@
 		886E2EAD294C603F009E86CF /* FMCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMCoreData.swift; sourceTree = "<group>"; };
 		886E2EE12952A4CB009E86CF /* NSManagedObjectContext+Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Add.swift"; sourceTree = "<group>"; };
 		886E2EE32952A559009E86CF /* NSManagedObject+Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Add.swift"; sourceTree = "<group>"; };
+		886E2EE9295ECFE5009E86CF /* TaskUpdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUpdateVC.swift; sourceTree = "<group>"; };
+		886E2EEB295ED56F009E86CF /* Marco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marco.swift; sourceTree = "<group>"; };
+		886E2EED295EE989009E86CF /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
+		886E2EEE295EF82B009E86CF /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
+		886E2EEF295EF90D009E86CF /* WorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkVC.swift; sourceTree = "<group>"; };
 		88C59F3B294C0E36007545A8 /* FMCoreDataStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FMCoreDataStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88C59F3E294C0E36007545A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88C59F40294C0E36007545A8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +162,8 @@
 			children = (
 				88C59F52294C0E68007545A8 /* TasksVC.swift */,
 				88C59F61294C27F0007545A8 /* TaskAddVC.swift */,
+				886E2EE9295ECFE5009E86CF /* TaskUpdateVC.swift */,
+				886E2EEF295EF90D009E86CF /* WorkVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -162,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				88C59F5F294C1EBF007545A8 /* UIView+Extention.swift */,
+				886E2EEB295ED56F009E86CF /* Marco.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -297,10 +308,13 @@
 				88C59F60294C1EBF007545A8 /* UIView+Extention.swift in Sources */,
 				88C59F41294C0E36007545A8 /* SceneDelegate.swift in Sources */,
 				88C59F67294C50F2007545A8 /* Model.xcdatamodeld in Sources */,
+				886E2EEA295ECFE5009E86CF /* TaskUpdateVC.swift in Sources */,
 				88C59F5C294C13C4007545A8 /* TaskCell.swift in Sources */,
+				886E2EEC295ED56F009E86CF /* Marco.swift in Sources */,
 				886E2EAE294C603F009E86CF /* FMCoreData.swift in Sources */,
 				88C59F53294C0E68007545A8 /* TasksVC.swift in Sources */,
 				88C59F62294C27F0007545A8 /* TaskAddVC.swift in Sources */,
+				886E2EF0295EF90D009E86CF /* WorkVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,9 +541,11 @@
 		88C59F65294C50F2007545A8 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				886E2EEE295EF82B009E86CF /* Model 3.xcdatamodel */,
+				886E2EED295EE989009E86CF /* Model 2.xcdatamodel */,
 				88C59F66294C50F2007545A8 /* Model.xcdatamodel */,
 			);
-			currentVersion = 88C59F66294C50F2007545A8 /* Model.xcdatamodel */;
+			currentVersion = 886E2EEE295EF82B009E86CF /* Model 3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

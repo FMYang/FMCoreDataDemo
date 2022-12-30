@@ -8,52 +8,41 @@
 import Foundation
 import CoreData
 
-protocol Managed: NSFetchRequestResult {
+protocol Managed {
     static var entityName: String { get }
-    static var defaultSortDescriptors: [NSSortDescriptor] { get }
-}
-
-extension Managed {
-    static var defaultSortDescriptors: [NSSortDescriptor] {
-        return []
-    }
-    
-    static var sortedFetchRequest: NSFetchRequest<Self> {
-        let request = NSFetchRequest<Self>(entityName: entityName)
-        request.sortDescriptors = defaultSortDescriptors
-        return request
-    }
 }
 
 extension Task: Managed {
     static var entityName: String {
         return "Task"
     }
+}
 
-    static var defaultSortDescriptors: [NSSortDescriptor] {
-        return [NSSortDescriptor(key: #keyPath(date), ascending: true)]
+extension Work: Managed {
+    static var entityName: String {
+        return "Work"
     }
 }
 
 extension NSManagedObjectContext {
-    public func saveOrRollback() -> Bool {
-        do {
-            try save()
-            return true
-        } catch {
-            rollback()
-            return false
+    public func saveContext() {
+        if hasChanges {
+            do {
+                try save()
+            } catch {
+                print(error)
+            }
         }
     }
     
     public func performChanges(block: @escaping () -> ()) {
         perform {
             block()
-            _ = self.saveOrRollback()
+            self.saveContext()
         }
     }
     
-    func insertObject<A: NSManagedObject>() -> A where A: Managed {
+    func createEntity<A: NSManagedObject>() -> A where A: Managed {
         guard let obj = NSEntityDescription.insertNewObject(forEntityName: A.entityName, into: self) as? A else {
             fatalError("Wrong object type")
         }
@@ -62,10 +51,32 @@ extension NSManagedObjectContext {
 }
 
 extension Task {
-    static func insert(into context: NSManagedObjectContext, name: String) -> Task {
-        let task: Task = context.insertObject()
+    static func create(with context: NSManagedObjectContext, name: String) -> Task {
+        let task: Task = context.createEntity()
         task.name = name
         task.date = Date()
+        task.updateDate = task.date
         return task
     }
+    
+//    static func fetchAll() -> [Task] {
+//        let request = NSFetchRequest<Self>(entityName: entityName)
+//        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(date), ascending: true)]
+//        do {
+//            let results = try FMCoreData.shared.backgroundContext.fetch(request)
+//            return results
+//        } catch {
+//            fatalError("Failed to fetch task: \(error)")
+//        }
+//    }
+}
+
+extension Work {
+    static func create(with context: NSManagedObjectContext, name: String) -> Work {
+        let work: Work = context.createEntity()
+        work.name = name
+        work.date = Date()
+        return work
+    }
+
 }
